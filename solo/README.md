@@ -84,6 +84,7 @@ then fastbin will like this:
 ```
 (0x70)     fastbin[5]: 0x603000 --> 0x603070 --> 0x603000 (overlap chunk with 0x603000(freed) )
 ```
+
 	* 3 = malloc(size) = 0x603000 # input aaaa
 	* 4 = malloc(size) = 0x603070
 	* 5 = malloc(size) = 0x603000
