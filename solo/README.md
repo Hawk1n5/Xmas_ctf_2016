@@ -86,7 +86,7 @@ And can use fastbin corruption,control malloc chunk to anywhere
 	* 3 = malloc(size) = 0x603000 # input aaaa
 	* 4 = malloc(size) = 0x603070
 	* 5 = malloc(size) = 0x603000
-	* 6 = malloc(size) = 0x616161 "aaaa"
+	* 6 = malloc(size) = 0x61616161 "aaaa"
 
 now, we know how to use this vul,and we need to overwire 0x602080,
 
